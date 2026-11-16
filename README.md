@@ -8,8 +8,6 @@
   <a href="#what-you-get">What you get</a>
   &nbsp;·&nbsp;
   <a href="#getting-around">Controls</a>
-  &nbsp;·&nbsp;
-  <a href="#building-from-source">Build it yourself</a>
 </p>
 
 <br>
@@ -129,37 +127,6 @@ and the uninstaller offers to delete it.
 With online artwork turned on, it sends game titles to the Steam store and Microsoft's product catalog to find
 covers, logos and details, using your Windows region. It also downloads Microsoft's public Game Pass lists. That's
 the whole list. Turn online artwork off in Settings, Library and nothing leaves your PC.
-
-## Building from source
-
-You need [Rust](https://rustup.rs) (stable) on Windows.
-
-```
-cd src-tauri
-cargo build --release
-```
-
-That builds `src-tauri\target\release\vela.exe`, which runs as-is. For the installer:
-
-```
-cargo install tauri-cli --version "^2" --locked
-cd src-tauri
-cargo tauri build
-```
-
-The installer is written to `src-tauri\target\release\bundle\nsis\`.
-
-### How it's put together
-
-- **`src-tauri/src`** is the Rust side. There's a scanner per store in `scan/`. `meta.rs` talks to the Steam and
-  Microsoft catalogs, `art.rs` caches artwork and cuts exact-size thumbnails, `launch.rs` starts games and watches
-  them until they close, and `watch.rs` handles rescans, folder watching and the tray icon.
-- **`ui`** is the interface: plain ES modules and CSS, with no framework and no build step. Motion runs on a small
-  spring engine in `core.js`, and grids only keep the covers near the screen alive, so a library of 2,000 games
-  scrolls like one of 20.
-  `shelf-plan.js` decides the Browse shelves, `stats.js` draws Statistics and `bigpicture.js` does full screen.
-- **`tools`** has the test harness and the scripts that draw the icon (`make_icon.py`) and the banner and installer
-  art (`make_brand.ps1`).
 
 ## Known rough edges
 
