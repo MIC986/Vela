@@ -18,6 +18,8 @@
   <img src="docs/screenshots/hero.jpg" alt="Vela's Home screen in front, with Browse and Statistics behind it" width="100%">
 </p>
 
+https://github.com/user-attachments/assets/2a58b8d3-bdc2-4008-963f-a0d09d229fd0
+
 Your games live in six launchers that all want to be opened first. Vela reads every one of them and puts
 everything on one screen: Steam, Epic, the Xbox app, GOG, EA, Ubisoft, Battle.net and the rest, plus the stray
 folder of games that never had a launcher at all. It plays just as well with a mouse at your desk as with a
