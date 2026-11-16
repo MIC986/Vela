@@ -1,0 +1,41 @@
+# Builds the Windows installer whenever a version tag is pushed (git tag v1.0.0 && git push --tags)
+# and attaches it to a draft release with that name, ready to publish.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install the Tauri CLI
+        run: cargo install tauri-cli --version "^2" --locked
+
+      - name: Test
+        working-directory: src-tauri
+        run: cargo test --release
+
+      - name: Build the installer
+        working-directory: src-tauri
+        run: cargo tauri build
+
+      - name: Attach it to a draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: src-tauri/target/release/bundle/nsis/*-setup.exe
+          body_path: CHANGELOG.md

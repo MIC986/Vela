@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vela</title>
+  <link rel="preload" href="assets/fonts/Manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/shell.css">
+  <link rel="stylesheet" href="css/views.css">
+  <link rel="stylesheet" href="css/overlays.css">
+</head>
+<body data-input="mouse">
+  <div id="backdrop" aria-hidden="true">
+    <div class="bd-ambient"></div>
+    <div class="bd-layer"></div>
+    <div class="bd-layer"></div>
+    <div class="bd-shade"></div>
+    <div class="bd-dim"></div>
+  </div>
+  <header id="topbar"></header>
+  <main id="views"></main>
+  <div id="overlays"></div>
+  <div id="toasts" aria-live="polite"></div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

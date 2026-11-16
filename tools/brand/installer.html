@@ -1,0 +1,50 @@
+<!doctype html>
+<!-- The installer's side panel (?panel) and header strip (?header), at four times their size. -->
+<html><head><meta charset="utf-8"><style>
+@font-face { font-family: Manrope; src: url("../../ui/assets/fonts/Manrope.woff2") format("woff2"); font-weight: 200 800; }
+* { margin: 0; box-sizing: border-box; }
+body { position: relative; overflow: hidden; font-family: Manrope, sans-serif; color: #f4f6fb; -webkit-font-smoothing: antialiased; background: #0b1030; }
+.panel { width: 656px; height: 1256px; }
+.header { width: 600px; height: 228px; background: #fff; }
+.sky { position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 14%, rgba(150, 110, 255, .5), transparent 48%),
+    radial-gradient(circle at 80% 92%, rgba(30, 200, 200, .38), transparent 50%),
+    linear-gradient(160deg, #1d1849 0%, #121a44 50%, #0a3346 100%); }
+.dust i { position: absolute; border-radius: 50%; background: #fff; }
+.panel .mark { position: absolute; left: 50%; top: 300px; width: 300px; height: 300px; margin-left: -150px; filter: drop-shadow(0 34px 44px rgba(0, 0, 0, .45)) drop-shadow(0 0 70px rgba(120, 170, 255, .3)); }
+.panel h1 { position: absolute; left: 0; right: 0; top: 660px; text-align: center; font-size: 128px; font-weight: 800; letter-spacing: -6px; }
+.panel p { position: absolute; left: 60px; right: 60px; top: 840px; text-align: center; font-size: 38px; font-weight: 600; line-height: 1.35; color: rgba(232, 237, 247, .7); }
+.header .strip { position: absolute; right: 0; top: 0; bottom: 0; width: 228px; overflow: hidden; }
+.header .strip .sky { inset: 0; }
+.header .strip::before { content: ""; position: absolute; z-index: 1; left: 0; top: 0; bottom: 0; width: 80px; background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0)); }
+.header .mark { position: absolute; z-index: 2; right: 46px; top: 46px; width: 136px; height: 136px; filter: drop-shadow(0 12px 16px rgba(0, 0, 0, .35)); }
+</style></head><body>
+<script>
+  const header = location.search.includes('header');
+  document.body.className = header ? 'header' : 'panel';
+  let seed = 5;
+  const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  const sky = (w, h, n) => {
+    const box = document.createElement('div');
+    box.innerHTML = '<div class="sky"></div><div class="dust"></div>';
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i');
+      const r = 1 + rand() * 2.6;
+      Object.assign(s.style, { left: `${rand() * w}px`, top: `${rand() * h}px`, width: `${r * 2}px`, height: `${r * 2}px`, opacity: (0.15 + rand() * 0.55).toFixed(2) });
+      box.lastChild.append(s);
+    }
+    return box;
+  };
+  if (header) {
+    const strip = document.createElement('div');
+    strip.className = 'strip';
+    strip.append(...sky(228, 228, 14).childNodes);
+    document.body.append(strip);
+    document.body.insertAdjacentHTML('beforeend', '<img class="mark" src="../../src-tauri/icons/icon.png" alt="">');
+  } else {
+    document.body.append(...sky(656, 1256, 70).childNodes);
+    document.body.insertAdjacentHTML('beforeend', '<img class="mark" src="../../src-tauri/icons/icon.png" alt=""><h1>Vela</h1><p>Every game on your PC, in one place.</p>');
+  }
+</script>
+</body></html>

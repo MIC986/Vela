@@ -1,0 +1,145 @@
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/fonts/Manrope.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: block;
+}
+
+:root {
+  --ink: #f4f6fb;
+  --ink-2: rgba(232, 237, 247, .68);
+  --ink-3: rgba(232, 237, 247, .44);
+  --line: rgba(255, 255, 255, .1);
+  --panel: rgba(18, 21, 30, .92);
+  --panel-2: rgba(255, 255, 255, .055);
+  --panel-3: rgba(255, 255, 255, .1);
+  --base: #07090f;
+  --accent: 125, 205, 255;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-soft: cubic-bezier(.22, .8, .3, 1);
+  --ease-move: cubic-bezier(.32, .72, 0, 1);
+  --gutter: round(4rem, 1px);
+  --ui-scale: 1;
+  --tile-radius: .95rem;
+  --bd-level: 1;
+}
+
+/* What marks the selected row. With a controller or keys it has to be seen from the
+   sofa; under a mouse the pointer already says where you are. */
+body {
+  --hi: #fff; --hi-ink: #0b0d13; --hi-ink-2: rgba(11, 13, 19, .64);
+  --hi-track: rgba(11, 13, 19, .2); --hi-fill: #0b0d13; --hi-knob: #0b0d13;
+}
+body[data-input="mouse"] {
+  --hi: var(--panel-3); --hi-ink: var(--ink); --hi-ink-2: var(--ink-3);
+  --hi-track: rgba(255, 255, 255, .17); --hi-fill: rgb(var(--accent)); --hi-knob: #fff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  /* One unit for everything: the interface scales as a whole, window to 4K TV. */
+  font-size: calc(min(1.482vh, .9vw) * var(--ui-scale));
+  height: 100%;
+  background: var(--base);
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--base);
+  color: var(--ink);
+  font-family: "Manrope", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  font-weight: 500;
+  font-feature-settings: "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  cursor: default;
+}
+
+body[data-input="gamepad"], body[data-input="keyboard"] { cursor: none; }
+body[data-input="gamepad"] *, body[data-input="keyboard"] * { cursor: none !important; }
+
+img { display: block; -webkit-user-drag: none; }
+button { font: inherit; color: inherit; background: none; border: 0; outline: 0; cursor: pointer; }
+input { font: inherit; color: inherit; background: none; border: 0; outline: 0; user-select: text; }
+svg { display: block; width: 1em; height: 1em; fill: currentColor; flex: none; }
+svg.stroke { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Backdrop ------------------------------------------------------------ */
+#backdrop { position: fixed; inset: 0; overflow: hidden; contain: strict; background: var(--base); }
+.bd-ambient {
+  position: absolute; inset: 0; opacity: .9;
+  background-color: rgb(16, 22, 36);
+  transition: background-color .7s var(--ease-soft);
+}
+.bd-layer {
+  position: absolute; inset: 0 0 auto 0; height: 100%;
+  background-size: cover; background-position: center 18%;
+  opacity: 0; transition: opacity .7s var(--ease-soft);
+  will-change: opacity, transform;
+}
+.bd-layer.on { opacity: var(--bd-level); }
+.bd-layer.soft { filter: blur(3.2rem) saturate(1.3); inset: -6rem; height: auto; bottom: -6rem; }
+.motion .bd-layer.drift:not(.soft) { animation: drift 26s ease-out both; }
+@keyframes drift { from { transform: scale(1.07); } to { transform: scale(1); } }
+.bd-shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(7, 9, 15, .62) 0, rgba(7, 9, 15, 0) 22%),
+    linear-gradient(to right, rgba(7, 9, 15, .72) 0, rgba(7, 9, 15, .24) 34%, rgba(7, 9, 15, 0) 60%),
+    linear-gradient(to top, rgba(7, 9, 15, .96) 0, rgba(7, 9, 15, .72) 22%, rgba(7, 9, 15, 0) 56%);
+}
+/* Library and Statistics keep the art, quietly: it shows at the top and fades under the content. */
+.bd-dim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(7, 9, 15, .5) 0, rgba(7, 9, 15, .86) 10rem, rgba(7, 9, 15, .92) 100%);
+  opacity: 0; transition: opacity .5s var(--ease-soft);
+}
+body[data-tab="library"] .bd-dim, body[data-tab="stats"] .bd-dim { opacity: 1; }
+
+/* Motion off ---------------------------------------------------------- */
+.reduced *, .reduced *::before, .reduced *::after {
+  animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important;
+}
+
+/* Shared bits --------------------------------------------------------- */
+.glyph {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  font-size: .78rem; font-weight: 800; line-height: 1;
+  background: rgba(255, 255, 255, .14); color: #fff;
+}
+.glyph.a { background: #2fb34a; } .glyph.b { background: #e24a42; }
+.glyph.x { background: #2f7fe6; } .glyph.y { background: #e8b324; color: #1a1400; }
+.glyph.pill { width: auto; min-width: 2.1rem; padding: 0 .5rem; border-radius: .46rem; font-size: .68rem; letter-spacing: .02em; background: rgba(255, 255, 255, .16); }
+.glyph.ps { background: rgba(255, 255, 255, .13); font-size: .9rem; }
+.glyph.ps.a { color: #8fb6ff; } .glyph.ps.b { color: #ff7e7e; }
+.glyph.ps.x { color: #f0a0d8; } .glyph.ps.y { color: #6fe6c4; }
+.glyph svg { width: .86rem; height: .86rem; }
+.glyph.key {
+  width: auto; min-width: 1.7rem; height: 1.6rem; padding: 0 .46rem; border-radius: .4rem;
+  background: rgba(255, 255, 255, .13); box-shadow: inset 0 -.09rem 0 rgba(255, 255, 255, .16);
+  font-size: .68rem; font-weight: 700;
+}
+
+.hints { display: flex; align-items: center; gap: 1.5rem; font-size: .84rem; font-weight: 600; color: var(--ink-2); animation: hints-in .3s var(--ease-soft) backwards; }
+@keyframes hints-in { from { opacity: 0; } }
+.hint {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .22rem .5rem .22rem .3rem; margin: -.22rem -.2rem;
+  border-radius: 2rem; transition: background .18s, color .18s;
+}
+.hint:hover { background: var(--panel-3); color: var(--ink); }
+
+.glide {
+  position: absolute; left: 0; top: 0; border-radius: .9rem; background: var(--hi); opacity: 0; pointer-events: none;
+  transition: transform .3s var(--ease-move), height .3s var(--ease-move), opacity .18s ease, background .2s ease;
+}
+.glide.on { opacity: 1; }
+
+.spinner {
+  width: 1rem; height: 1rem; border-radius: 50%;
+  border: .14rem solid rgba(255, 255, 255, .22); border-top-color: #fff;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

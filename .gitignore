@@ -1,0 +1,14 @@
+# Build output
+src-tauri/target/
+src-tauri/gen/
+dist/
+
+# Test runs
+.test-data/
+
+# Editors and the OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini

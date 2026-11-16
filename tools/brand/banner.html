@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- The README banner. Rendered by tools/make_brand.ps1. -->
+<html><head><meta charset="utf-8"><style>
+@font-face { font-family: Manrope; src: url("../../ui/assets/fonts/Manrope.woff2") format("woff2"); font-weight: 200 800; }
+* { margin: 0; box-sizing: border-box; }
+html, body { width: 1280px; height: 400px; overflow: hidden; background: #070912; }
+body { position: relative; font-family: Manrope, sans-serif; color: #f4f6fb; -webkit-font-smoothing: antialiased; }
+.sky { position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(150, 110, 255, .42), transparent 42%),
+    radial-gradient(circle at 78% 92%, rgba(30, 200, 200, .32), transparent 46%),
+    radial-gradient(circle at 52% 50%, rgba(110, 150, 255, .2), transparent 60%),
+    linear-gradient(115deg, #1c1747 0%, #121a44 45%, #0a3346 100%); }
+.dust { position: absolute; inset: 0; }
+.dust i { position: absolute; border-radius: 50%; background: #fff; }
+.ring { position: absolute; left: 236px; top: 200px; width: 520px; height: 520px; margin: -260px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .07); }
+.ring.two { width: 760px; height: 760px; margin: -380px; border-color: rgba(255, 255, 255, .045); }
+.mark { position: absolute; left: 116px; top: 80px; width: 240px; height: 240px; filter: drop-shadow(0 26px 40px rgba(0, 0, 0, .45)) drop-shadow(0 0 60px rgba(120, 170, 255, .28)); }
+.text { position: absolute; left: 420px; top: 92px; }
+h1 { font-size: 132px; font-weight: 800; letter-spacing: -6px; line-height: 1; }
+p { margin-top: 18px; font-size: 27px; font-weight: 600; color: rgba(232, 237, 247, .72); letter-spacing: -.3px; }
+.tags { display: flex; gap: 10px; margin-top: 26px; }
+.tags span { padding: 7px 15px; border-radius: 99px; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  font-size: 16px; font-weight: 700; color: rgba(232, 237, 247, .82); }
+</style></head><body>
+<div class="sky"></div>
+<div class="dust" id="dust"></div>
+<div class="ring"></div><div class="ring two"></div>
+<img class="mark" src="../../src-tauri/icons/icon.png" alt="">
+<div class="text">
+  <h1>Vela</h1>
+  <p>Every game on your PC, in one place that feels like a console.</p>
+  <div class="tags"><span>Steam</span><span>Epic</span><span>Xbox</span><span>GOG</span><span>EA</span><span>Ubisoft</span><span>+ more</span></div>
+</div>
+<script>
+  // The same faint stars every time.
+  let seed = 11;
+  const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  const dust = document.getElementById('dust');
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('i');
+    const r = 0.6 + rand() * 1.6;
+    Object.assign(s.style, { left: `${rand() * 1280}px`, top: `${rand() * 400}px`, width: `${r * 2}px`, height: `${r * 2}px`, opacity: (0.15 + rand() * 0.5).toFixed(2) });
+    dust.append(s);
+  }
+</script>
+</body></html>

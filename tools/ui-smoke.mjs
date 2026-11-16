@@ -1,0 +1,38 @@
+// First look: boot, home, library, game page, settings, search.
+export default async ({ eval: ev, key, shot, wait, console: problems }) => {
+  await wait(2500);
+  console.log('games', await ev('document.querySelectorAll(".row .tile").length'), 'title', await ev('document.title'));
+  await shot('01-home');
+  await key('Right', 3, 180);
+  await wait(1200);
+  await shot('02-home-moved');
+  await key('e');
+  await wait(1200);
+  await shot('03-library');
+  await key('Right', 2);
+  await key('Down');
+  await wait(900);
+  await shot('04-library-moved');
+  await key('Enter');
+  await wait(1800);
+  await shot('05-game');
+  await key('Down');
+  await wait(1300);
+  await shot('06-game-lower');
+  await key('Esc');
+  await wait(600);
+  await key('m');
+  await wait(700);
+  await shot('07-menu');
+  await key('Esc');
+  await wait(500);
+  await key('/');
+  await wait(600);
+  await ev('(() => { const i = document.querySelector(".search input"); i.value = "minecraft"; i.dispatchEvent(new Event("input")); })()');
+  await wait(900);
+  await shot('08-search');
+  await key('Esc');
+  await wait(500);
+  console.log('layers left', await ev('document.getElementById("overlays").children.length'));
+  console.log('problems', problems.length);
+};
