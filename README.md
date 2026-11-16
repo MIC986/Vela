@@ -4,7 +4,9 @@
 
 <p align="center">
   <a href="../../releases/latest"><b>Download for Windows</b></a>
-  &nbsp;·&nbsp;
+</p>
+
+<p align="center">
   <a href="#what-you-get">What you get</a>
   &nbsp;·&nbsp;
   <a href="#getting-around">Controls</a>
