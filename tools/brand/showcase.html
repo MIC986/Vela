@@ -1,0 +1,67 @@
+<!doctype html>
+<!--
+  Frames README screenshots on Vela's night sky. Rendered by tools/make_showcase.ps1:
+  ?hero=front,left,right  three screens layered in depth
+  ?shot=name              one screen in a window
+  Screens are read from the folder given by &from=.
+-->
+<html><head><meta charset="utf-8"><style>
+@font-face { font-family: Manrope; src: url("../../ui/assets/fonts/Manrope.woff2") format("woff2"); font-weight: 200 800; }
+* { margin: 0; box-sizing: border-box; }
+html, body { overflow: hidden; background: #070912; }
+body { position: relative; width: 1600px; height: 900px; font-family: Manrope, sans-serif; }
+body.single { height: 980px; }
+body.hero { height: 780px; }
+.sky { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 18% 8%, rgba(150, 110, 255, .5), transparent 70%),
+    radial-gradient(ellipse 60% 70% at 86% 100%, rgba(30, 200, 200, .38), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 50% 55%, rgba(110, 150, 255, .22), transparent 70%),
+    linear-gradient(120deg, #1c1747 0%, #121a44 48%, #0a3346 100%); }
+.dust i { position: absolute; border-radius: 50%; background: #fff; }
+.window { position: absolute; border-radius: 18px; overflow: hidden; background: #07090f;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 50px 110px rgba(0, 0, 0, .55), 0 18px 40px rgba(0, 0, 0, .35); }
+.window img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* A faint sheen along the top edge, like glass catching light. */
+.window::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0) 18%); }
+.stage { position: absolute; inset: 0; perspective: 2400px; }
+.single .window { left: 110px; top: 90px; width: 1380px; height: 776px; }
+.glow { position: absolute; left: 50%; top: 52%; width: 1300px; height: 700px; margin: -350px 0 0 -650px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(140, 170, 255, .28), transparent); filter: blur(20px); }
+.hero .back { width: 860px; height: 484px; top: 112px; opacity: .92; }
+.hero .back.left { left: 40px; transform: rotateY(24deg) translateZ(-260px); transform-origin: left center; }
+.hero .back.right { right: 40px; transform: rotateY(-24deg) translateZ(-260px); transform-origin: right center; }
+.hero .back::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(7, 9, 18, .3); }
+.hero .front { left: 290px; top: 104px; width: 1020px; height: 574px; }
+</style></head><body>
+<div class="sky"></div>
+<div class="dust" id="dust"></div>
+<div class="glow"></div>
+<div class="stage" id="stage"></div>
+<script>
+  const q = new URLSearchParams(location.search);
+  const from = q.get('from');
+  const src = (name) => `${from}/${name}.jpg`;
+  const stage = document.getElementById('stage');
+  const win = (name, cls) => `<div class="window ${cls}"><img src="${src(name)}" alt=""></div>`;
+  if (q.get('hero')) {
+    const [front, left, right] = q.get('hero').split(',');
+    document.body.className = 'hero';
+    stage.innerHTML = win(left, 'back left') + win(right, 'back right') + win(front, 'front');
+  } else {
+    document.body.className = 'single';
+    stage.innerHTML = win(q.get('shot'), '');
+  }
+  let seed = 23;
+  const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  const dust = document.getElementById('dust');
+  const h = document.body.offsetHeight;
+  for (let i = 0; i < 110; i++) {
+    const s = document.createElement('i');
+    const r = 0.6 + rand() * 1.5;
+    Object.assign(s.style, { left: `${rand() * 1600}px`, top: `${rand() * h}px`, width: `${r * 2}px`, height: `${r * 2}px`, opacity: (0.12 + rand() * 0.45).toFixed(2) });
+    dust.append(s);
+  }
+</script>
+</body></html>

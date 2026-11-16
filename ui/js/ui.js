@@ -159,13 +159,16 @@ function isDarkLogo(image) {
     logoPaint.clearRect(0, 0, 64, 32);
     logoPaint.drawImage(image, 0, 0, 64, 32);
     const { data } = logoPaint.getImageData(0, 0, 64, 32);
-    let [solid, dark] = [0, 0];
+    let [solid, dark, bright] = [0, 0, 0];
     for (let i = 0; i < data.length; i += 4) {
       if (data[i + 3] < 128) continue;
       solid += 1;
-      if (data[i] * 0.3 + data[i + 1] * 0.59 + data[i + 2] * 0.11 < 72) dark += 1;
+      const luma = data[i] * 0.3 + data[i + 1] * 0.59 + data[i + 2] * 0.11;
+      if (luma < 72) dark += 1;
+      else if (luma > 150) bright += 1;
     }
-    return solid > 0 && dark / solid > 0.3;
+    // Only a logo that's dark all over: light lettering on a dark backdrop reads fine as it is.
+    return solid > 0 && dark / solid > 0.3 && bright / solid < 0.06;
   } catch {
     return false;
   }

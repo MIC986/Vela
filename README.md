@@ -15,7 +15,7 @@
 <br>
 
 <p align="center">
-  <img src="docs/screenshots/home.jpg" alt="Vela's Home screen: a row of game covers under the selected game's artwork and logo" width="100%">
+  <img src="docs/screenshots/hero.jpg" alt="Vela's Home screen in front, with Browse and Statistics behind it" width="100%">
 </p>
 
 Your games live in six launchers that all want to be opened first. Vela reads every one of them and puts
@@ -37,7 +37,7 @@ started. When it spots a series, like four Battlefields or every Minecraft, that
 its own art and colors. Click the Library tab again to switch between the two.
 
 <p align="center">
-  <img src="docs/screenshots/browse.jpg" alt="The Browse view: a series panel for one franchise, with its games inside, above shelves of other games" width="100%">
+  <img src="docs/screenshots/series.jpg" alt="The Browse view: a series panel for one franchise, with its games inside, above shelves of other games" width="100%">
 </p>
 
 **Statistics.** Hours played across every store, your most played games, the genres your time goes to, when in the
@@ -51,13 +51,17 @@ counts too, so it fills in from the first launch.
   </tr>
   <tr>
     <td width="50%"><img src="docs/screenshots/game.jpg" alt="A game's page with its artwork, logo, Play button and playtime"></td>
-    <td width="50%"><img src="docs/screenshots/search.jpg" alt="Search showing results as you type"></td>
+    <td width="50%"><img src="docs/screenshots/browse.jpg" alt="Browse, opening on the games you played last"></td>
   </tr>
 </table>
 
 **Full screen that feels like a console.** Press F11 and the screen goes dark, Vela's mark comes up with a swell of
 sound, and the interface opens around you. In full screen, Back on Home brings up a small menu for sleep, restart,
 going to the desktop or leaving full screen. Pick which monitor it uses in Settings.
+
+<p align="center">
+  <img src="docs/screenshots/fullscreen.jpg" alt="Vela in full screen, with a game's artwork filling the screen" width="100%">
+</p>
 
 **The small things.**
 - Game pages with descriptions, screenshots, playtime and install size.
@@ -72,9 +76,6 @@ going to the desktop or leaving full screen. Pick which monitor it uses in Setti
 - Ten accent colors or one that follows each game's art, three background styles, cover size and corner shape, the interface's overall size,
   interface sounds, reduced motion, and swapped A/B for players used to the other side.
 
-<p align="center">
-  <img src="docs/screenshots/settings.jpg" alt="Settings, open on Appearance" width="100%">
-</p>
 
 ## Where it finds games
 
